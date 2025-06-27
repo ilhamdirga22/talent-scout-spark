@@ -25,6 +25,7 @@ interface Candidate {
 const CandidateCard = ({ candidate }: { candidate: Candidate }) => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const platformColors = {
     linkedin: "bg-blue-600",
@@ -38,6 +39,15 @@ const CandidateCard = ({ candidate }: { candidate: Candidate }) => {
     tiktok: "🎵",
   };
 
+  const handleImageError = () => {
+    console.log("Image failed to load for candidate:", candidate.name);
+    setImageError(true);
+  };
+
+  const handleImageLoad = () => {
+    console.log("Image loaded successfully for candidate:", candidate.name);
+  };
+
   return (
     <>
       <div className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-all duration-200 overflow-hidden">
@@ -45,11 +55,22 @@ const CandidateCard = ({ candidate }: { candidate: Candidate }) => {
           {/* Header */}
           <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0">
-              <img
-                src={candidate.avatar}
-                alt={candidate.name}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover flex-shrink-0"
-              />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+                {!imageError ? (
+                  <img
+                    src={candidate.avatar}
+                    alt={candidate.name}
+                    className="w-full h-full object-cover"
+                    onError={handleImageError}
+                    onLoad={handleImageLoad}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg">
+                    {candidate.name.charAt(0)}
+                  </div>
+                )}
+              </div>
               <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{candidate.name}</h3>
                 <p className="text-xs sm:text-sm text-gray-600 truncate">{candidate.title}</p>

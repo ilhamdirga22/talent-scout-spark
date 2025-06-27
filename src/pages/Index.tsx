@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Header from "../components/Header";
 import SearchFilters from "../components/SearchFilters";
@@ -17,7 +16,7 @@ const Index = () => {
       title: "Frontend Developer",
       location: "Denpasar-Bali",
       platform: "linkedin",
-      profileUrl: "https://www.linkedin.com/in/m-ilham-dirgantara-5547bb257/,
+      profileUrl: "https://www.linkedin.com/in/m-ilham-dirgantara-5547bb257/",
       avatar: "https://i.postimg.cc/W39VMc8r/Student-wearing-black-suits-white-shirts-and-black-ties-without-eye-glasses-sitting-for-a-formal-p.jpg",
       skills: ["React", "TypeScript", "UI/UX Design", "Node.js", "GraphQL"],
       rating: 5,
@@ -115,6 +114,10 @@ const Index = () => {
     }
   ];
 
+  // Debug logging
+  console.log("Total mock candidates:", mockCandidates.length);
+  console.log("Mock candidates data:", mockCandidates);
+
   const filteredCandidates = mockCandidates.filter(candidate => {
     const matchesSearch = !searchQuery || 
       candidate.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -128,6 +131,10 @@ const Index = () => {
 
     return matchesSearch && matchesPlatform && matchesType;
   });
+
+  console.log("Filtered candidates:", filteredCandidates.length);
+  console.log("Current search query:", searchQuery);
+  console.log("Current filters:", filters);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -216,9 +223,12 @@ const Index = () => {
         {/* Candidates Grid */}
         {filteredCandidates.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCandidates.map(candidate => (
-              <CandidateCard key={candidate.id} candidate={candidate} />
-            ))}
+            {filteredCandidates.map(candidate => {
+              console.log("Rendering candidate:", candidate.name);
+              return (
+                <CandidateCard key={candidate.id} candidate={candidate} />
+              );
+            })}
           </div>
         ) : (
           <div className="text-center py-12">

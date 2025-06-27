@@ -18,14 +18,14 @@ const Index = () => {
       location: "Denpasar-Bali",
       platform: "linkedin",
       profileUrl: "https://www.linkedin.com/in/m-ilham-dirgantara-5547bb257/,
-      avatar: "https://ik.imagekit.io/byv92du0h/Student%20wearing%20black%20suits,%20white%20shirts%20and%20black%20ties%20without%20eye%20glasses,%20sitting%20for%20a%20formal%20p....jpeg?updatedAt=1751015035245",
+      avatar: "https://i.postimg.cc/W39VMc8r/Student-wearing-black-suits-white-shirts-and-black-ties-without-eye-glasses-sitting-for-a-formal-p.jpg",
       skills: ["React", "TypeScript", "UI/UX Design", "Node.js", "GraphQL"],
       rating: 5,
       experience: "5+ years experience",
       type: "work" as const,
       contact: {
-        email: "sarah.chen@email.com",
-        whatsapp: "+1234567890"
+        email: "idirga37@email.com",
+        whatsapp: "+6287805862897"
       }
     },
     {

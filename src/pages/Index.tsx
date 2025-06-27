@@ -13,12 +13,12 @@ const Index = () => {
   const mockCandidates = [
     {
       id: "1",
-      name: "Sarah Chen",
+      name: "M.Ilham Digantara",
       title: "Frontend Developer",
-      location: "San Francisco, CA",
+      location: "Denpasar-Bali",
       platform: "linkedin",
-      profileUrl: "https://linkedin.com/in/sarahchen",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=150&h=150&fit=crop&crop=face",
+      profileUrl: "https://www.linkedin.com/in/m-ilham-dirgantara-5547bb257/,
+      avatar: "https://ik.imagekit.io/byv92du0h/Student%20wearing%20black%20suits,%20white%20shirts%20and%20black%20ties%20without%20eye%20glasses,%20sitting%20for%20a%20formal%20p....jpeg?updatedAt=1751015035245",
       skills: ["React", "TypeScript", "UI/UX Design", "Node.js", "GraphQL"],
       rating: 5,
       experience: "5+ years experience",

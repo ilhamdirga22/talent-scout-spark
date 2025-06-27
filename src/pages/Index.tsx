@@ -175,25 +175,25 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-8">
         {/* Hero Section */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
             Discover Amazing Talent
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto px-2">
             Find the perfect candidates for your opportunities across LinkedIn, YouTube, and TikTok. 
             Connect with professionals for work or musicians for collaboration.
           </p>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
           {stats.map((stat, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-sm border p-6 text-center">
-              <stat.icon className={`h-8 w-8 mx-auto mb-2 ${stat.color}`} />
-              <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-              <div className="text-sm text-gray-600">{stat.label}</div>
+            <div key={index} className="bg-white rounded-lg shadow-sm border p-3 sm:p-6 text-center">
+              <stat.icon className={`h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-1 sm:mb-2 ${stat.color}`} />
+              <div className="text-lg sm:text-2xl font-bold text-gray-900">{stat.value}</div>
+              <div className="text-xs sm:text-sm text-gray-600">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -205,13 +205,13 @@ const Index = () => {
         />
 
         {/* Results Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold text-gray-900">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
             Candidates ({filteredCandidates.length})
           </h2>
           <div className="flex items-center space-x-2">
             <span className="text-sm text-gray-600">Sort by:</span>
-            <select className="border border-gray-300 rounded-lg px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full sm:w-auto">
               <option>Relevance</option>
               <option>Rating</option>
               <option>Experience</option>
@@ -222,7 +222,7 @@ const Index = () => {
 
         {/* Candidates Grid */}
         {filteredCandidates.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredCandidates.map(candidate => {
               console.log("Rendering candidate:", candidate.name);
               return (

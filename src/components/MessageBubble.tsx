@@ -4,9 +4,27 @@ import { cn } from "@/lib/utils";
 
 interface Message {
   id: string;
-  type: "user" | "agent";
+  type: "user" | "agent" | "candidate";
   content: string;
   timestamp: Date;
+  candidate?: {
+    id: string;
+    name: string;
+    title: string;
+    location: string;
+    platform: string;
+    profileUrl: string;
+    avatar: string;
+    skills: string[];
+    rating: number;
+    experience: string;
+    type: "work" | "music";
+    contact: {
+      email?: string;
+      phone?: string;
+      whatsapp?: string;
+    };
+  };
 }
 
 interface MessageBubbleProps {

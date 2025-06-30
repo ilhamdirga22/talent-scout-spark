@@ -1,69 +1,55 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageSquare, Users, Zap, Star, ArrowRight, Search, Brain, Target, Sparkles, Bot, Rocket, Crown, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
-
 const Landing = () => {
-  const features = [
-    {
-      icon: MessageSquare,
-      title: "AI-Powered Chat Search",
-      description: "Simply describe who you're looking for in natural language. Our AI understands your needs and finds the perfect candidates.",
-      gradient: "from-blue-500 to-cyan-500"
-    },
-    {
-      icon: Brain,
-      title: "Smart Matching",
-      description: "Advanced algorithms analyze skills, experience, and compatibility to deliver highly relevant candidate recommendations.",
-      gradient: "from-purple-500 to-pink-500"
-    },
-    {
-      icon: Target,
-      title: "Precision Targeting",
-      description: "Filter across LinkedIn, YouTube, and TikTok to find professionals for work or musicians for collaboration.",
-      gradient: "from-green-500 to-emerald-500"
-    },
-    {
-      icon: Zap,
-      title: "Instant Results",
-      description: "Get candidate recommendations in seconds, not hours. Start conversations immediately with built-in contact tools.",
-      gradient: "from-orange-500 to-red-500"
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: "Sarah Johnson",
-      role: "HR Director",
-      company: "TechCorp",
-      rating: 5,
-      text: "This AI search has revolutionized our hiring process. We find better candidates 10x faster than traditional methods.",
-      avatar: "SJ",
-      color: "from-blue-500 to-purple-500"
-    },
-    {
-      name: "Marcus Chen",
-      role: "Music Producer",
-      company: "Sound Studios",
-      rating: 5,
-      text: "Finding talented musicians for collaborations used to take weeks. Now I discover amazing artists in minutes through simple conversations.",
-      avatar: "MC",
-      color: "from-green-500 to-blue-500"
-    },
-    {
-      name: "Emma Rodriguez",
-      role: "Startup Founder",
-      company: "Innovation Labs",
-      rating: 5,
-      text: "The AI understands exactly what I'm looking for. It's like having a personal talent scout available 24/7.",
-      avatar: "ER",
-      color: "from-pink-500 to-orange-500"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 relative overflow-hidden">
+  const features = [{
+    icon: MessageSquare,
+    title: "AI-Powered Chat Search",
+    description: "Simply describe who you're looking for in natural language. Our AI understands your needs and finds the perfect candidates.",
+    gradient: "from-blue-500 to-cyan-500"
+  }, {
+    icon: Brain,
+    title: "Smart Matching",
+    description: "Advanced algorithms analyze skills, experience, and compatibility to deliver highly relevant candidate recommendations.",
+    gradient: "from-purple-500 to-pink-500"
+  }, {
+    icon: Target,
+    title: "Precision Targeting",
+    description: "Filter across LinkedIn, YouTube, and TikTok to find professionals for work or musicians for collaboration.",
+    gradient: "from-green-500 to-emerald-500"
+  }, {
+    icon: Zap,
+    title: "Instant Results",
+    description: "Get candidate recommendations in seconds, not hours. Start conversations immediately with built-in contact tools.",
+    gradient: "from-orange-500 to-red-500"
+  }];
+  const testimonials = [{
+    name: "Sarah Johnson",
+    role: "HR Director",
+    company: "TechCorp",
+    rating: 5,
+    text: "This AI search has revolutionized our hiring process. We find better candidates 10x faster than traditional methods.",
+    avatar: "SJ",
+    color: "from-blue-500 to-purple-500"
+  }, {
+    name: "Marcus Chen",
+    role: "Music Producer",
+    company: "Sound Studios",
+    rating: 5,
+    text: "Finding talented musicians for collaborations used to take weeks. Now I discover amazing artists in minutes through simple conversations.",
+    avatar: "MC",
+    color: "from-green-500 to-blue-500"
+  }, {
+    name: "Emma Rodriguez",
+    role: "Startup Founder",
+    company: "Innovation Labs",
+    rating: 5,
+    text: "The AI understands exactly what I'm looking for. It's like having a personal talent scout available 24/7.",
+    avatar: "ER",
+    color: "from-pink-500 to-orange-500"
+  }];
+  return <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.15),transparent)]"></div>
@@ -73,10 +59,18 @@ const Landing = () => {
 
       {/* Floating Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <Bot className="absolute top-20 left-20 h-12 w-12 text-blue-400/20 animate-bounce" style={{ animationDelay: '1s' }} />
-        <Sparkles className="absolute top-40 right-32 h-8 w-8 text-purple-400/30 animate-bounce" style={{ animationDelay: '2s' }} />
-        <Crown className="absolute bottom-32 left-32 h-10 w-10 text-yellow-400/20 animate-bounce" style={{ animationDelay: '3s' }} />
-        <Trophy className="absolute bottom-20 right-20 h-14 w-14 text-orange-400/20 animate-bounce" style={{ animationDelay: '0.5s' }} />
+        <Bot className="absolute top-20 left-20 h-12 w-12 text-blue-400/20 animate-bounce" style={{
+        animationDelay: '1s'
+      }} />
+        <Sparkles className="absolute top-40 right-32 h-8 w-8 text-purple-400/30 animate-bounce" style={{
+        animationDelay: '2s'
+      }} />
+        <Crown className="absolute bottom-32 left-32 h-10 w-10 text-yellow-400/20 animate-bounce" style={{
+        animationDelay: '3s'
+      }} />
+        <Trophy className="absolute bottom-20 right-20 h-14 w-14 text-orange-400/20 animate-bounce" style={{
+        animationDelay: '0.5s'
+      }} />
       </div>
 
       <div className="relative z-10">
@@ -126,7 +120,7 @@ const Landing = () => {
                   <ArrowRight className="ml-3 h-6 w-6" />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="text-xl px-10 py-8 border-2 border-white/30 text-white hover:bg-white/10 font-bold rounded-2xl hover:scale-105 transition-all duration-300">
+              <Button variant="outline" size="lg" className="text-xl px-10 py-8 border-2 border-white/30 hover:bg-white/10 font-bold rounded-2xl hover:scale-105 transition-all duration-300 text-[#090808]">
                 <MessageSquare className="mr-3 h-6 w-6" />
                 Watch Demo
               </Button>
@@ -161,8 +155,7 @@ const Landing = () => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <Card key={index} className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 hover:scale-105 transition-all duration-300 rounded-2xl overflow-hidden group">
+            {features.map((feature, index) => <Card key={index} className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 hover:scale-105 transition-all duration-300 rounded-2xl overflow-hidden group">
                 <CardHeader className="text-center pb-4">
                   <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.gradient} p-4 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
                     <feature.icon className="h-8 w-8 text-white" />
@@ -174,8 +167,7 @@ const Landing = () => {
                     {feature.description}
                   </CardDescription>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </section>
 
@@ -237,8 +229,7 @@ const Landing = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 hover:scale-105 transition-all duration-300 rounded-2xl overflow-hidden">
+            {testimonials.map((testimonial, index) => <Card key={index} className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 hover:scale-105 transition-all duration-300 rounded-2xl overflow-hidden">
                 <CardHeader className="pb-4">
                   <div className="flex items-center space-x-4 mb-4">
                     <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${testimonial.color} flex items-center justify-center text-white font-bold text-lg`}>
@@ -251,17 +242,14 @@ const Landing = () => {
                   </div>
                   
                   <div className="flex items-center space-x-1 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
+                    {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
                   </div>
                   
                   <CardDescription className="text-white/80 italic text-base leading-relaxed">
                     "{testimonial.text}"
                   </CardDescription>
                 </CardHeader>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </section>
 
@@ -312,8 +300,6 @@ const Landing = () => {
           </div>
         </footer>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Landing;

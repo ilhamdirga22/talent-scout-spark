@@ -107,13 +107,6 @@ const Landing = () => {
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-20 text-center">
           <div className="max-w-5xl mx-auto">
-            <div className="mb-8">
-              <div className="inline-flex items-center bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl border border-white/20 rounded-full px-6 py-3 mb-8">
-                <Trophy className="h-5 w-5 text-yellow-400 mr-2" />
-                <span className="text-white font-semibold">🏆 Winner of TechCrunch Hackathon 2024</span>
-              </div>
-            </div>
-            
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">
               Find Amazing Talent with
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent block mt-2">

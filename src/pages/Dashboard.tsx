@@ -100,10 +100,6 @@ const Dashboard = () => {
                   </div>
                   <span className="text-xl font-bold text-white">TalentScout AI</span>
                 </div>
-                <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-bold">
-                  <Crown className="h-3 w-3 mr-1" />
-                  Pro User
-                </Badge>
               </div>
               
               <div className="flex items-center space-x-4">
@@ -205,7 +201,7 @@ const Dashboard = () => {
 
             {/* Quick Actions */}
             <div>
-              <Card className="bg-white/10 backdrop-blur-xl border border-white/20 mb-6">
+              <Card className="bg-white/10 backdrop-blur-xl border border-white/20">
                 <CardHeader>
                   <CardTitle className="text-white font-bold">Quick Actions</CardTitle>
                 </CardHeader>
@@ -227,17 +223,6 @@ const Dashboard = () => {
                     Message Center
                   </Button>
                 </CardContent>
-              </Card>
-
-              {/* Achievement Badge */}
-              <Card className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-xl border border-yellow-500/30">
-                <CardHeader className="text-center">
-                  <Trophy className="h-12 w-12 text-yellow-400 mx-auto mb-2 animate-bounce" />
-                  <CardTitle className="text-white font-bold">Achievement Unlocked!</CardTitle>
-                  <CardDescription className="text-yellow-200">
-                    🎉 You've found 100+ candidates this month!
-                  </CardDescription>
-                </CardHeader>
               </Card>
             </div>
           </div>

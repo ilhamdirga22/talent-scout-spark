@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Search, Mail, Lock, ArrowLeft } from "lucide-react";
+import { Search, Mail, Lock, ArrowLeft, Sparkles, Bot, Zap, Stars } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
@@ -29,14 +29,12 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate login
     setTimeout(() => {
       toast({
-        title: "Welcome back!",
+        title: "🎉 Welcome back!",
         description: "You've been successfully signed in."
       });
       setIsLoading(false);
-      // In real app, redirect to dashboard
     }, 2000);
   };
 
@@ -44,10 +42,9 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate magic link
     setTimeout(() => {
       toast({
-        title: "Magic Link Sent!",
+        title: "✨ Magic Link Sent!",
         description: "Check your email for a secure sign-in link."
       });
       setIsLoading(false);
@@ -55,145 +52,202 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Home
-          </Link>
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <Search className="h-8 w-8 text-blue-600" />
-            <span className="text-2xl font-bold text-gray-900">TalentScout AI</span>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+      </div>
+
+      {/* Floating Icons */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <Bot className="absolute top-20 left-20 h-8 w-8 text-blue-400/30 animate-bounce" style={{ animationDelay: '1s' }} />
+        <Sparkles className="absolute top-40 right-32 h-6 w-6 text-purple-400/40 animate-bounce" style={{ animationDelay: '2s' }} />
+        <Zap className="absolute bottom-32 left-32 h-7 w-7 text-pink-400/30 animate-bounce" style={{ animationDelay: '3s' }} />
+        <Stars className="absolute bottom-20 right-20 h-9 w-9 text-indigo-400/30 animate-bounce" style={{ animationDelay: '0.5s' }} />
+      </div>
+
+      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+        <div className="w-full max-w-md">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <Link to="/" className="inline-flex items-center text-white/80 hover:text-white mb-6 transition-colors group">
+              <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+              Back to Home
+            </Link>
+            <div className="flex items-center justify-center space-x-3 mb-6">
+              <div className="relative">
+                <Search className="h-10 w-10 text-white drop-shadow-lg" />
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse"></div>
+              </div>
+              <span className="text-3xl font-bold text-white drop-shadow-lg">TalentScout AI</span>
+            </div>
+            <p className="text-white/70 text-lg font-medium">Your AI-powered talent discovery platform</p>
+          </div>
+
+          {/* Main Card */}
+          <Card className="shadow-2xl border-0 backdrop-blur-xl bg-white/10 hover:bg-white/15 transition-all duration-300 hover:scale-105">
+            <CardHeader className="text-center pb-6">
+              <CardTitle className="text-3xl text-white font-bold mb-2">Welcome Back</CardTitle>
+              <CardDescription className="text-white/70 text-lg">
+                Continue your talent discovery journey
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Toggle Buttons */}
+              <div className="flex rounded-2xl border border-white/20 p-1 bg-white/5">
+                <button
+                  type="button"
+                  className={`flex-1 py-3 px-6 rounded-xl text-sm font-bold transition-all duration-300 ${
+                    !isMagicLink 
+                      ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg" 
+                      : "text-white/70 hover:text-white hover:bg-white/10"
+                  }`}
+                  onClick={() => setIsMagicLink(false)}
+                >
+                  🔐 Email & Password
+                </button>
+                <button
+                  type="button"
+                  className={`flex-1 py-3 px-6 rounded-xl text-sm font-bold transition-all duration-300 ${
+                    isMagicLink 
+                      ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg" 
+                      : "text-white/70 hover:text-white hover:bg-white/10"
+                  }`}
+                  onClick={() => setIsMagicLink(true)}
+                >
+                  ✨ Magic Link
+                </button>
+              </div>
+
+              {isMagicLink ? (
+                /* Magic Link Form */
+                <form onSubmit={handleMagicLinkLogin} className="space-y-6">
+                  <div className="space-y-3">
+                    <Label htmlFor="email" className="text-white font-semibold text-base">Email Address</Label>
+                    <div className="relative group">
+                      <Mail className="absolute left-4 top-4 h-5 w-5 text-white/50 group-focus-within:text-white transition-colors" />
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="pl-12 h-14 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-xl focus:bg-white/20 focus:border-white/40 transition-all duration-300"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    className="w-full h-14 text-lg font-bold bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 border-0 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 rounded-xl" 
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                        Sending Magic Link...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-5 w-5 mr-2" />
+                        Send Magic Link
+                      </>
+                    )}
+                  </Button>
+
+                  <p className="text-sm text-white/60 text-center bg-white/5 rounded-lg p-3">
+                    ✨ We'll send you a secure link to sign in without a password
+                  </p>
+                </form>
+              ) : (
+                /* Email/Password Form */
+                <form onSubmit={handleEmailPasswordLogin} className="space-y-6">
+                  <div className="space-y-3">
+                    <Label htmlFor="email" className="text-white font-semibold text-base">Email Address</Label>
+                    <div className="relative group">
+                      <Mail className="absolute left-4 top-4 h-5 w-5 text-white/50 group-focus-within:text-white transition-colors" />
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="pl-12 h-14 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-xl focus:bg-white/20 focus:border-white/40 transition-all duration-300"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label htmlFor="password" className="text-white font-semibold text-base">Password</Label>
+                    <div className="relative group">
+                      <Lock className="absolute left-4 top-4 h-5 w-5 text-white/50 group-focus-within:text-white transition-colors" />
+                      <Input
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className="pl-12 h-14 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-xl focus:bg-white/20 focus:border-white/40 transition-all duration-300"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-sm">
+                    <label className="flex items-center space-x-3 cursor-pointer text-white/80 hover:text-white transition-colors">
+                      <input type="checkbox" className="rounded border-white/30 bg-white/10 text-purple-500 focus:ring-purple-500 focus:ring-offset-0" />
+                      <span>Remember me</span>
+                    </label>
+                    <a href="#" className="text-white/80 hover:text-white font-semibold transition-colors hover:underline">
+                      Forgot password?
+                    </a>
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    className="w-full h-14 text-lg font-bold bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 border-0 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 rounded-xl" 
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                        Signing In...
+                      </>
+                    ) : (
+                      <>
+                        <Lock className="h-5 w-5 mr-2" />
+                        Sign In
+                      </>
+                    )}
+                  </Button>
+                </form>
+              )}
+
+              <Separator className="bg-white/20" />
+
+              <div className="text-center">
+                <p className="text-white/70 text-base mb-4">Don't have an account?</p>
+                <Link to="/register">
+                  <Button variant="outline" className="w-full h-12 text-base font-bold border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300 rounded-xl">
+                    🚀 Create Account
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Footer */}
+          <div className="text-center mt-8 text-white/60">
+            <p className="text-sm">🔒 Your data is secure and encrypted</p>
           </div>
         </div>
-
-        <Card className="shadow-lg">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Welcome Back</CardTitle>
-            <CardDescription>
-              Sign in to continue your talent search
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Toggle between email/password and magic link */}
-            <div className="flex rounded-lg border p-1">
-              <button
-                type="button"
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                  !isMagicLink 
-                    ? "bg-blue-600 text-white" 
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-                onClick={() => setIsMagicLink(false)}
-              >
-                Email & Password
-              </button>
-              <button
-                type="button"
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                  isMagicLink 
-                    ? "bg-blue-600 text-white" 
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-                onClick={() => setIsMagicLink(true)}
-              >
-                Magic Link
-              </button>
-            </div>
-
-            {isMagicLink ? (
-              /* Magic Link Form */
-              <form onSubmit={handleMagicLinkLogin} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Sending Magic Link..." : "Send Magic Link"}
-                </Button>
-
-                <p className="text-xs text-gray-600 text-center">
-                  We'll send you a secure link to sign in without a password
-                </p>
-              </form>
-            ) : (
-              /* Email/Password Form */
-              <form onSubmit={handleEmailPasswordLogin} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="password"
-                      name="password"
-                      type="password"
-                      placeholder="Enter your password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between text-sm">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input type="checkbox" className="rounded border-gray-300" />
-                    <span className="text-gray-600">Remember me</span>
-                  </label>
-                  <a href="#" className="text-blue-600 hover:text-blue-700">
-                    Forgot password?
-                  </a>
-                </div>
-
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Signing In..." : "Sign In"}
-                </Button>
-              </form>
-            )}
-
-            <Separator />
-
-            <div className="text-center text-sm text-gray-600">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">
-                Create one
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

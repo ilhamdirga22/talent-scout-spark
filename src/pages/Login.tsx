@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Search, Mail, Lock, ArrowLeft, Sparkles, Bot, Zap, Stars } from "lucide-react";
+import { Search, Mail, Lock, ArrowLeft, Sparkles, Bot, Zap, Stars, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
@@ -232,13 +232,24 @@ const Login = () => {
 
               <Separator className="bg-white/20" />
 
-              <div className="text-center">
-                <p className="text-white/70 text-base mb-4">Don't have an account?</p>
-                <Link to="/register">
-                  <Button variant="outline" className="w-full h-12 text-base font-bold border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300 rounded-xl">
-                    🚀 Create Account
+              <div className="space-y-4">
+                <div className="text-center">
+                  <p className="text-white/70 text-base mb-4">Don't have an account?</p>
+                </div>
+                
+                <Link to="/register" className="block">
+                  <Button className="w-full h-14 text-lg font-bold bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 border-0 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 rounded-xl text-white">
+                    <UserPlus className="h-5 w-5 mr-3" />
+                    Create Your Free Account
+                    <Sparkles className="h-4 w-4 ml-2" />
                   </Button>
                 </Link>
+                
+                <div className="text-center">
+                  <p className="text-xs text-white/50 bg-white/5 rounded-lg p-2">
+                    ✨ Join thousands discovering talent with AI • Free forever
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>

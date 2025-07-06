@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, ArrowLeft, Sparkles, Bot } from "lucide-react";
+import { Send, ArrowLeft, Sparkles, Bot, Zap, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import MessageBubble from "@/components/MessageBubble";
 import CandidateCardBubble from "@/components/CandidateCardBubble";
@@ -38,7 +38,7 @@ const Chat = () => {
     {
       id: "1",
       type: "agent",
-      content: "Hi! I'm here to help you find the perfect candidates. What kind of talent are you looking for today?",
+      content: "Hello! I'm your AI-powered talent scout assistant. I can help you find the perfect candidates for any role. What position are you looking to fill today?",
       timestamp: new Date(Date.now() - 60000),
     },
     {
@@ -50,7 +50,7 @@ const Chat = () => {
     {
       id: "3",
       type: "agent",
-      content: "Great! I found some excellent candidates that match your requirements. Here's one that stands out:",
+      content: "Excellent! I've analyzed thousands of profiles and found some outstanding candidates that match your requirements. Here's a top match:",
       timestamp: new Date(Date.now() - 15000),
     },
     {
@@ -106,12 +106,11 @@ const Chat = () => {
     setInputValue("");
     setIsLoading(true);
 
-    // Simulate agent response
     setTimeout(() => {
       const agentMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: "agent",
-        content: "I'm searching for more candidates based on your requirements. Let me find some additional options for you.",
+        content: "I'm analyzing our talent database to find more candidates that match your specific requirements. Let me present some additional options.",
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, agentMessage]);
@@ -127,44 +126,59 @@ const Chat = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 flex flex-col relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-pink-400/20 to-indigo-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-lg border-b border-gray-200/50 px-4 py-3 relative z-10 shadow-sm">
-        <div className="flex items-center justify-between max-w-4xl mx-auto">
+      <div className="bg-white/80 backdrop-blur-lg border-b border-gray-200/50 px-6 py-4 relative z-10 shadow-sm">
+        <div className="flex items-center justify-between max-w-5xl mx-auto">
           <Link 
             to="/search" 
-            className="flex items-center text-gray-600 hover:text-indigo-600 transition-all duration-200 hover:scale-105"
+            className="flex items-center text-gray-600 hover:text-indigo-600 transition-all duration-200 hover:scale-105 group"
           >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            <span className="font-medium">Back to Search</span>
+            <div className="p-2 rounded-lg bg-gray-50 group-hover:bg-indigo-50 transition-colors duration-200">
+              <ArrowLeft className="h-4 w-4" />
+            </div>
+            <span className="ml-3 font-medium">Back to Search</span>
           </Link>
           
           <div className="text-center">
-            <div className="flex items-center justify-center space-x-2 mb-1">
-              <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <Bot className="h-4 w-4 text-white" />
+            <div className="flex items-center justify-center space-x-3 mb-1">
+              <div className="relative">
+                <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-xl flex items-center justify-center shadow-lg">
+                  <Bot className="h-5 w-5 text-white" />
+                </div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white animate-pulse"></div>
               </div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                TalentScout AI
-              </h1>
+              <div>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent">
+                  TalentScout AI Assistant
+                </h1>
+                <div className="flex items-center justify-center space-x-2 text-sm">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                  <span className="text-emerald-600 font-medium">Online & Ready</span>
+                </div>
+              </div>
               <Sparkles className="h-5 w-5 text-indigo-500 animate-pulse" />
             </div>
-            <p className="text-sm text-gray-500 font-medium">Your AI Talent Assistant</p>
           </div>
           
-          <div className="w-32"></div>
+          <div className="w-32 flex justify-end">
+            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 px-3 py-1 rounded-full">
+              <span className="text-xs font-semibold text-indigo-700">Pro Plan</span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full relative z-10">
-        <ScrollArea ref={scrollAreaRef} className="flex-1 px-4 py-8">
+      <div className="flex-1 flex flex-col max-w-5xl mx-auto w-full relative z-10">
+        <ScrollArea ref={scrollAreaRef} className="flex-1 px-6 py-8">
           <div className="space-y-6">
             {messages.map((message, index) => (
               <div 
@@ -186,7 +200,7 @@ const Chat = () => {
                   message={{
                     id: "loading",
                     type: "agent",
-                    content: "Typing...",
+                    content: "Analyzing talent database...",
                     timestamp: new Date(),
                   }}
                   isLoading={true}
@@ -197,33 +211,47 @@ const Chat = () => {
         </ScrollArea>
 
         {/* Input Area */}
-        <div className="bg-white/80 backdrop-blur-lg border-t border-gray-200/50 px-4 py-6 shadow-lg">
-          <div className="flex items-end space-x-4">
+        <div className="bg-white/80 backdrop-blur-lg border-t border-gray-200/50 px-6 py-6 shadow-lg">
+          <div className="flex items-end space-x-4 max-w-4xl mx-auto">
             <div className="flex-1 relative">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center space-x-2 text-gray-400">
+                <MessageSquare className="h-4 w-4" />
+                <div className="w-px h-4 bg-gray-300"></div>
+              </div>
               <Input
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask about candidates, skills, or requirements..."
-                className="min-h-[52px] text-base rounded-2xl border-2 border-gray-200/50 bg-white/70 backdrop-blur-sm focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 transition-all duration-200 placeholder:text-gray-400 shadow-sm"
+                placeholder="Describe the role, skills, or candidate type you're looking for..."
+                className="min-h-[56px] text-base rounded-2xl border-2 border-gray-200/70 bg-white/90 backdrop-blur-sm focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 transition-all duration-200 placeholder:text-gray-400 shadow-sm pl-12 pr-16"
                 disabled={isLoading}
               />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                <Sparkles className="h-4 w-4" />
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center space-x-2">
+                <Zap className="h-4 w-4 text-indigo-500" />
+                <div className="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-1 rounded-full">
+                  AI
+                </div>
               </div>
             </div>
             <Button
               onClick={handleSendMessage}
               disabled={!inputValue.trim() || isLoading}
               size="icon"
-              className="h-[52px] w-[52px] rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
+              className="h-[56px] w-[56px] rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-700 hover:from-indigo-700 hover:to-purple-800 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
             >
               <Send className="h-5 w-5" />
             </Button>
           </div>
-          <p className="text-xs text-gray-500 mt-3 text-center font-medium">
-            Press <kbd className="px-2 py-1 bg-gray-100 rounded text-xs">Enter</kbd> to send • <kbd className="px-2 py-1 bg-gray-100 rounded text-xs">Shift + Enter</kbd> for new line
-          </p>
+          <div className="flex items-center justify-between mt-4 max-w-4xl mx-auto">
+            <p className="text-xs text-gray-500 font-medium">
+              Press <kbd className="px-2 py-1 bg-gray-100 rounded text-xs border">Enter</kbd> to send • 
+              <kbd className="px-2 py-1 bg-gray-100 rounded text-xs border ml-1">Shift + Enter</kbd> for new line
+            </p>
+            <div className="flex items-center space-x-2 text-xs text-gray-500">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+              <span>AI is ready to help</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

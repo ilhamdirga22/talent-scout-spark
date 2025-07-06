@@ -2,7 +2,7 @@ import { useState } from "react";
 import Header from "../components/Header";
 import SearchFilters from "../components/SearchFilters";
 import CandidateCard from "../components/CandidateCard";
-import { Users, TrendingUp, MessageCircle, Star } from "lucide-react";
+import { Users, TrendingUp, MessageCircle, Star, Sparkles, Target, Award } from "lucide-react";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,7 +13,7 @@ const Index = () => {
     {
       id: "1",
       name: "M.Ilham Digantara",
-      title: "Frontend Developer",
+      title: "Frontend Developer", 
       location: "Denpasar-Bali",
       platform: "linkedin",
       profileUrl: "https://www.linkedin.com/in/m-ilham-dirgantara-5547bb257/",
@@ -28,7 +28,7 @@ const Index = () => {
       }
     },
     {
-      id: "2",
+      id: "2", 
       name: "Marcus Johnson",
       title: "Music Producer & Beatmaker",
       location: "Los Angeles, CA",
@@ -48,7 +48,7 @@ const Index = () => {
       id: "3",
       name: "Emma Rodriguez",
       title: "Content Creator & Influencer",
-      location: "Miami, FL",
+      location: "Miami, FL", 
       platform: "tiktok",
       profileUrl: "https://tiktok.com/@emmacreates",
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
@@ -147,96 +147,138 @@ const Index = () => {
   const stats = [
     {
       icon: Users,
-      label: "Total Candidates",
+      label: "Active Candidates",
       value: mockCandidates.length.toString(),
-      color: "text-blue-600"
+      color: "from-blue-600 to-blue-700",
+      bgColor: "bg-blue-50",
+      change: "+12%"
     },
     {
       icon: TrendingUp,
       label: "Success Rate",
-      value: "87%",
-      color: "text-green-600"
+      value: "94%",
+      color: "from-emerald-600 to-emerald-700",
+      bgColor: "bg-emerald-50",
+      change: "+5%"
     },
     {
-      icon: MessageCircle,
-      label: "Messages Sent",
-      value: "234",
-      color: "text-purple-600"
+      icon: Award,
+      label: "Placements",
+      value: "187",
+      color: "from-purple-600 to-purple-700",
+      bgColor: "bg-purple-50",
+      change: "+23%"
     },
     {
       icon: Star,
       label: "Avg Rating",
-      value: "4.6",
-      color: "text-yellow-600"
+      value: "4.8",
+      color: "from-amber-600 to-amber-700",
+      bgColor: "bg-amber-50",
+      change: "+0.2"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
       <Header />
       
-      <main className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-8">
+      <main className="max-w-7xl mx-auto px-4 lg:px-8 py-8">
         {/* Hero Section */}
-        <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
-            Discover Amazing Talent
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+            <Sparkles className="h-4 w-4 mr-2" />
+            AI-Powered Talent Discovery
+          </div>
+          <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent mb-4">
+            Find exceptional talent
+            <br />
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              faster than ever
+            </span>
           </h1>
-          <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto px-2">
-            Find the perfect candidates for your opportunities across LinkedIn, YouTube, and TikTok. 
-            Connect with professionals for work or musicians for collaboration.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Discover and connect with top professionals across LinkedIn, YouTube, and TikTok. 
+            Our AI helps you find the perfect candidates for any role or collaboration.
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {stats.map((stat, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-sm border p-3 sm:p-6 text-center">
-              <stat.icon className={`h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-1 sm:mb-2 ${stat.color}`} />
-              <div className="text-lg sm:text-2xl font-bold text-gray-900">{stat.value}</div>
-              <div className="text-xs sm:text-sm text-gray-600">{stat.label}</div>
+            <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md transition-all duration-200">
+              <div className={`inline-flex p-3 rounded-xl ${stat.bgColor} mb-4`}>
+                <stat.icon className={`h-6 w-6 bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`} />
+              </div>
+              <div className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</div>
+              <div className="text-sm text-gray-600 mb-2">{stat.label}</div>
+              <div className="text-xs text-emerald-600 font-medium bg-emerald-50 px-2 py-1 rounded-full inline-block">
+                {stat.change} this month
+              </div>
             </div>
           ))}
         </div>
 
         {/* Search and Filters */}
-        <SearchFilters 
-          onSearch={handleSearch}
-          onFiltersChange={handleFiltersChange}
-        />
-
-        {/* Results Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
-          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
-            Candidates ({filteredCandidates.length})
-          </h2>
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-600">Sort by:</span>
-            <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full sm:w-auto">
-              <option>Relevance</option>
-              <option>Rating</option>
-              <option>Experience</option>
-              <option>Recently Added</option>
-            </select>
-          </div>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
+          <SearchFilters 
+            onSearch={handleSearch}
+            onFiltersChange={handleFiltersChange}
+          />
         </div>
 
-        {/* Candidates Grid */}
-        {filteredCandidates.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {filteredCandidates.map(candidate => {
-              console.log("Rendering candidate:", candidate.name);
-              return (
-                <CandidateCard key={candidate.id} candidate={candidate} />
-              );
-            })}
+        {/* Results Section */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          {/* Results Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-1">
+                Talent Pool
+              </h2>
+              <p className="text-gray-600">
+                {filteredCandidates.length} candidates match your criteria
+              </p>
+            </div>
+            <div className="flex items-center space-x-3">
+              <span className="text-sm text-gray-600 font-medium">Sort by:</span>
+              <select className="bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                <option>Best Match</option>
+                <option>Highest Rated</option>
+                <option>Most Experience</option>
+                <option>Recently Added</option>
+              </select>
+            </div>
           </div>
-        ) : (
-          <div className="text-center py-12">
-            <Users className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No candidates found</h3>
-            <p className="text-gray-600">Try adjusting your search criteria or filters.</p>
-          </div>
-        )}
+
+          {/* Candidates Grid */}
+          {filteredCandidates.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredCandidates.map(candidate => {
+                console.log("Rendering candidate:", candidate.name);
+                return (
+                  <CandidateCard key={candidate.id} candidate={candidate} />
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <div className="bg-gray-50 rounded-full p-4 w-16 h-16 mx-auto mb-4">
+                <Target className="h-8 w-8 text-gray-400 mx-auto" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No candidates found</h3>
+              <p className="text-gray-600 mb-6">Try adjusting your search criteria or filters to find more matches.</p>
+              <button 
+                onClick={() => {
+                  setSearchQuery("");
+                  setFilters({ platforms: [], type: "all" });
+                }}
+                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );

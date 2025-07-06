@@ -104,37 +104,77 @@ const Landing = () => {
       {/* Hero Section */}
       <section className="pt-20 pb-16 bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Find Perfect Candidates with 
-              <span className="text-blue-600 block">AI-Powered Precision</span>
-            </h1>
-            
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Transform your talent acquisition with intelligent matching. Our AI searches across LinkedIn, 
-              YouTube, and TikTok to discover exceptional candidates in seconds, not weeks.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link to="/register">
-                <Button size="lg" className="text-lg px-8 py-6 bg-blue-600 hover:bg-blue-700">
-                  Start Free Trial
-                  <ArrowRight className="ml-2 h-5 w-5" />
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Text Content */}
+            <div className="text-left max-w-2xl">
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                Find Perfect Candidates with 
+                <span className="text-blue-600 block">AI-Powered Precision</span>
+              </h1>
+              
+              <p className="text-xl text-gray-600 mb-8">
+                Transform your talent acquisition with intelligent matching. Our AI searches across LinkedIn, 
+                YouTube, and TikTok to discover exceptional candidates in seconds, not weeks.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <Link to="/register">
+                  <Button size="lg" className="text-lg px-8 py-6 bg-blue-600 hover:bg-blue-700">
+                    Start Free Trial
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Button variant="outline" size="lg" className="text-lg px-8 py-6">
+                  Watch Demo
                 </Button>
-              </Link>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-6">
-                Watch Demo
-              </Button>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                {stats.map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="text-3xl font-bold text-gray-900 mb-1">{stat.number}</div>
+                    <div className="text-gray-600">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl font-bold text-gray-900 mb-1">{stat.number}</div>
-                  <div className="text-gray-600">{stat.label}</div>
+            {/* Hero Image */}
+            <div className="relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+                  alt="Professional using MacBook Pro for talent acquisition"
+                  className="w-full h-[500px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-transparent"></div>
+              </div>
+              
+              {/* Floating Cards */}
+              <div className="absolute -top-6 -left-6 bg-white rounded-xl p-4 shadow-lg border">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                    <CheckCircle className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-gray-900">Match Found</div>
+                    <div className="text-sm text-gray-600">98% compatibility</div>
+                  </div>
                 </div>
-              ))}
+              </div>
+              
+              <div className="absolute -bottom-6 -right-6 bg-white rounded-xl p-4 shadow-lg border">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                    <Users className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-gray-900">50K+ Candidates</div>
+                    <div className="text-sm text-gray-600">Ready to connect</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -70,7 +70,7 @@ const Landing = () => {
       role: "Head of Talent",
       company: "TechCorp",
       content:
-        "TalentScout AI transformed our hiring process. We're finding better candidates in a fraction of the time.",
+        "Celent AI transformed our hiring process. We're finding better candidates in a fraction of the time.",
       rating: 5,
     },
     {
@@ -107,22 +107,31 @@ const Landing = () => {
               <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-2 rounded-xl">
                 <Search className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">
-                TalentScout AI
-              </span>
+              <span className="text-xl font-bold text-gray-900">Celent AI</span>
             </Link>
 
             <div className="flex items-center space-x-4">
               {user ? (
-                <button
-                  onClick={() => {
-                    dispatch(logout());
-                    navigate("/");
-                  }}
-                  className="font-medium bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-all"
-                >
-                  Logout
-                </button>
+                <div className="flex gap-4">
+                  <Link to="/dashboard">
+                    <Button
+                      size="lg"
+                      className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                    >
+                      Dashboard
+                    </Button>
+                  </Link>
+
+                  <button
+                    onClick={() => {
+                      dispatch(logout());
+                      navigate("/");
+                    }}
+                    className="font-medium bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-all"
+                  >
+                    Logout
+                  </button>
+                </div>
               ) : (
                 <>
                   <Link to="/login">
@@ -246,7 +255,7 @@ const Landing = () => {
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Why Choose TalentScout AI?
+              Why Choose Celent AI?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Revolutionary AI technology that transforms how you discover and
@@ -417,7 +426,7 @@ const Landing = () => {
               <div className="bg-blue-600 p-2 rounded-xl">
                 <Search className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold">TalentScout AI</span>
+              <span className="text-xl font-bold">Celent AI</span>
             </div>
             <div className="flex space-x-8 text-gray-400">
               <a href="#" className="hover:text-white transition-colors">
@@ -432,7 +441,7 @@ const Landing = () => {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 TalentScout AI. All rights reserved.</p>
+            <p>&copy; 2024 Celent AI. All rights reserved.</p>
           </div>
         </div>
       </footer>

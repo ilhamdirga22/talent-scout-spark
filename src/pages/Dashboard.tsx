@@ -144,15 +144,17 @@ const Dashboard = () => {
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-3">
-                  <div className="relative">
-                    <Search className="h-8 w-8 text-white" />
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse"></div>
+                <Link to="/">
+                  <div className="flex items-center space-x-3 cursor-pointer">
+                    <div className="relative">
+                      <Search className="h-8 w-8 text-white" />
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse"></div>
+                    </div>
+                    <span className="text-xl font-bold text-white">
+                      Celent AI
+                    </span>
                   </div>
-                  <span className="text-xl font-bold text-white">
-                    TalentScout AI
-                  </span>
-                </div>
+                </Link>
               </div>
 
               <div className="flex items-center space-x-4">

@@ -93,9 +93,7 @@ const Login = () => {
             <div className="bg-blue-600 p-2 rounded-lg">
               <Search className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-gray-900">
-              TalentScout AI
-            </span>
+            <span className="text-2xl font-bold text-gray-900">Celent AI</span>
           </div>
           <p className="text-gray-600 text-sm">
             Professional HR recruitment platform

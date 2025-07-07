@@ -1,9 +1,15 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, ArrowLeft, Sparkles, Bot, Zap, MessageSquare } from "lucide-react";
+import {
+  Send,
+  ArrowLeft,
+  Sparkles,
+  Bot,
+  Zap,
+  MessageSquare,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import MessageBubble from "@/components/MessageBubble";
 import CandidateCardBubble from "@/components/CandidateCardBubble";
@@ -38,19 +44,22 @@ const Chat = () => {
     {
       id: "1",
       type: "agent",
-      content: "Hello! I'm your AI-powered talent scout assistant. I can help you find the perfect candidates for any role. What position are you looking to fill today?",
+      content:
+        "Hello! I'm your AI-powered talent scout assistant. I can help you find the perfect candidates for any role. What position are you looking to fill today?",
       timestamp: new Date(Date.now() - 60000),
     },
     {
       id: "2",
       type: "user",
-      content: "I'm looking for a senior React developer with experience in TypeScript and modern frameworks.",
+      content:
+        "I'm looking for a senior React developer with experience in TypeScript and modern frameworks.",
       timestamp: new Date(Date.now() - 30000),
     },
     {
       id: "3",
       type: "agent",
-      content: "Excellent! I've analyzed thousands of profiles and found some outstanding candidates that match your requirements. Here's a top match:",
+      content:
+        "Excellent! I've analyzed thousands of profiles and found some outstanding candidates that match your requirements. Here's a top match:",
       timestamp: new Date(Date.now() - 15000),
     },
     {
@@ -65,7 +74,8 @@ const Chat = () => {
         location: "San Francisco, CA",
         platform: "linkedin",
         profileUrl: "https://linkedin.com/in/sarah-chen",
-        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
+        avatar:
+          "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
         skills: ["React", "TypeScript", "Node.js", "GraphQL"],
         rating: 5,
         experience: "5+ years experience",
@@ -85,7 +95,9 @@ const Chat = () => {
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     if (scrollAreaRef.current) {
-      const scrollElement = scrollAreaRef.current.querySelector('[data-radix-scroll-area-viewport]');
+      const scrollElement = scrollAreaRef.current.querySelector(
+        "[data-radix-scroll-area-viewport]"
+      );
       if (scrollElement) {
         scrollElement.scrollTop = scrollElement.scrollHeight;
       }
@@ -102,7 +114,7 @@ const Chat = () => {
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
     setIsLoading(true);
 
@@ -110,10 +122,11 @@ const Chat = () => {
       const agentMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: "agent",
-        content: "I'm analyzing our talent database to find more candidates that match your specific requirements. Let me present some additional options.",
+        content:
+          "I'm analyzing our talent database to find more candidates that match your specific requirements. Let me present some additional options.",
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, agentMessage]);
+      setMessages((prev) => [...prev, agentMessage]);
       setIsLoading(false);
     }, 1500);
   };
@@ -130,15 +143,21 @@ const Chat = () => {
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
       </div>
 
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-lg border-b border-gray-200/50 px-6 py-4 relative z-10 shadow-sm">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
-          <Link 
-            to="/search" 
+          <Link
+            to="/search"
             className="flex items-center text-gray-600 hover:text-indigo-600 transition-all duration-200 hover:scale-105 group"
           >
             <div className="p-2 rounded-lg bg-gray-50 group-hover:bg-indigo-50 transition-colors duration-200">
@@ -146,7 +165,7 @@ const Chat = () => {
             </div>
             <span className="ml-3 font-medium">Back to Search</span>
           </Link>
-          
+
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-1">
               <div className="relative">
@@ -157,20 +176,24 @@ const Chat = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent">
-                  TalentScout AI Assistant
+                  Celent AI Assistant
                 </h1>
                 <div className="flex items-center justify-center space-x-2 text-sm">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                  <span className="text-emerald-600 font-medium">Online & Ready</span>
+                  <span className="text-emerald-600 font-medium">
+                    Online & Ready
+                  </span>
                 </div>
               </div>
               <Sparkles className="h-5 w-5 text-indigo-500 animate-pulse" />
             </div>
           </div>
-          
+
           <div className="w-32 flex justify-end">
             <div className="bg-gradient-to-r from-indigo-50 to-purple-50 px-3 py-1 rounded-full">
-              <span className="text-xs font-semibold text-indigo-700">Pro Plan</span>
+              <span className="text-xs font-semibold text-indigo-700">
+                Pro Plan
+              </span>
             </div>
           </div>
         </div>
@@ -181,7 +204,7 @@ const Chat = () => {
         <ScrollArea ref={scrollAreaRef} className="flex-1 px-6 py-8">
           <div className="space-y-6">
             {messages.map((message, index) => (
-              <div 
+              <div
                 key={message.id}
                 className="animate-fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
@@ -193,7 +216,7 @@ const Chat = () => {
                 )}
               </div>
             ))}
-            
+
             {isLoading && (
               <div className="animate-fade-in">
                 <MessageBubble
@@ -244,8 +267,15 @@ const Chat = () => {
           </div>
           <div className="flex items-center justify-between mt-4 max-w-4xl mx-auto">
             <p className="text-xs text-gray-500 font-medium">
-              Press <kbd className="px-2 py-1 bg-gray-100 rounded text-xs border">Enter</kbd> to send • 
-              <kbd className="px-2 py-1 bg-gray-100 rounded text-xs border ml-1">Shift + Enter</kbd> for new line
+              Press{" "}
+              <kbd className="px-2 py-1 bg-gray-100 rounded text-xs border">
+                Enter
+              </kbd>{" "}
+              to send •
+              <kbd className="px-2 py-1 bg-gray-100 rounded text-xs border ml-1">
+                Shift + Enter
+              </kbd>{" "}
+              for new line
             </p>
             <div className="flex items-center space-x-2 text-xs text-gray-500">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>

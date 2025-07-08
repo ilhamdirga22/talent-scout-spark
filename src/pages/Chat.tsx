@@ -23,21 +23,7 @@ import {
   setError,
 } from "@/store/chatSlice";
 import CandidateCardsBubble from "@/components/CandidateCardsBubble";
-
-interface Candidate {
-  name: string;
-  profileUrl: string;
-  platform: string;
-  summary: string;
-}
-
-interface Message {
-  id: string;
-  type: "user" | "agent" | "candidate";
-  content: string;
-  timestamp: Date;
-  candidates?: Candidate[];
-}
+import type { Message, Candidate } from "@/store/chatSlice";
 
 const Chat = () => {
   const [inputValue, setInputValue] = useState("");
@@ -73,7 +59,7 @@ const Chat = () => {
       id: Date.now().toString(),
       type: "user",
       content: inputValue.trim(),
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
     };
 
     dispatch(addMessage(userMessage));
@@ -100,7 +86,7 @@ const Chat = () => {
           id: (Date.now() + 1).toString(),
           type: "agent",
           content: `I found ${response.data.result.candidates.length} candidates that match your search. Here they are:`,
-          timestamp: new Date(),
+          timestamp: new Date().toISOString(),
         };
 
         // Add candidate message
@@ -108,7 +94,7 @@ const Chat = () => {
           id: (Date.now() + 2).toString(),
           type: "candidate",
           content: "",
-          timestamp: new Date(),
+          timestamp: new Date().toISOString(),
           candidates: response.data.result.candidates,
         };
 
@@ -120,7 +106,7 @@ const Chat = () => {
           type: "agent",
           content:
             "I couldn't find any candidates matching your criteria. Try adjusting your search terms or being more specific. Please re-enter your query and include job title, platform, and location.",
-          timestamp: new Date(),
+          timestamp: new Date().toISOString(),
         };
         dispatch(addMessage(agentMessage));
       }
@@ -131,7 +117,7 @@ const Chat = () => {
         type: "agent",
         content:
           "Sorry, I encountered an error while searching for candidates. Please try again.",
-        timestamp: new Date(),
+        timestamp: new Date().toISOString(),
       };
       dispatch(addMessage(agentMessage));
     } finally {
@@ -165,13 +151,13 @@ const Chat = () => {
       <div className="bg-white/80 backdrop-blur-lg border-b border-gray-200/50 px-6 py-4 relative z-10 shadow-sm">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
           <Link
-            to="/search"
+            to="/dashboard"
             className="flex items-center text-gray-600 hover:text-indigo-600 transition-all duration-200 hover:scale-105 group"
           >
             <div className="p-2 rounded-lg bg-gray-50 group-hover:bg-indigo-50 transition-colors duration-200">
               <ArrowLeft className="h-4 w-4" />
             </div>
-            <span className="ml-3 font-medium">Back to Search</span>
+            <span className="ml-3 font-medium">Back to Dashboard</span>
           </Link>
 
           <div className="text-center">
@@ -232,7 +218,7 @@ const Chat = () => {
                     id: "loading",
                     type: "agent",
                     content: "Analyzing talent database...",
-                    timestamp: new Date(),
+                    timestamp: new Date().toISOString(),
                   }}
                   isLoading={true}
                 />

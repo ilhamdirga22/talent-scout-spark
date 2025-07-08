@@ -37,10 +37,12 @@ const MessageBubble = ({ message, isLoading }: MessageBubbleProps) => {
   const isAgent = message.type === "agent";
 
   return (
-    <div className={cn(
-      "flex items-start space-x-4 group",
-      isUser && "flex-row-reverse space-x-reverse"
-    )}>
+    <div
+      className={cn(
+        "flex items-start space-x-4 group",
+        isUser && "flex-row-reverse space-x-reverse"
+      )}
+    >
       {/* Avatar */}
       {isAgent && (
         <div className="relative">
@@ -53,7 +55,7 @@ const MessageBubble = ({ message, isLoading }: MessageBubbleProps) => {
           <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
         </div>
       )}
-      
+
       {isUser && (
         <Avatar className="h-10 w-10 flex-shrink-0 ring-2 ring-gray-200 shadow-md">
           <AvatarImage src="" />
@@ -64,7 +66,12 @@ const MessageBubble = ({ message, isLoading }: MessageBubbleProps) => {
       )}
 
       {/* Message Content */}
-      <div className={cn("flex flex-col max-w-xs sm:max-w-md lg:max-w-lg xl:max-w-xl", isUser ? "items-end" : "items-start")}>
+      <div
+        className={cn(
+          "flex flex-col max-w-xs sm:max-w-md lg:max-w-lg xl:max-w-xl",
+          isUser ? "items-end" : "items-start"
+        )}
+      >
         <div
           className={cn(
             "rounded-3xl px-5 py-3 text-sm leading-relaxed shadow-lg transition-all duration-200 hover:shadow-xl relative overflow-hidden",
@@ -79,7 +86,7 @@ const MessageBubble = ({ message, isLoading }: MessageBubbleProps) => {
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-100 to-purple-100"></div>
             </div>
           )}
-          
+
           {/* Shine effect for user messages */}
           {isUser && (
             <div className="absolute inset-0 opacity-20">
@@ -92,24 +99,39 @@ const MessageBubble = ({ message, isLoading }: MessageBubbleProps) => {
               <div className="flex items-center space-x-2 py-1">
                 <div className="flex space-x-1">
                   <div className="w-2.5 h-2.5 bg-indigo-400 rounded-full animate-bounce"></div>
-                  <div className="w-2.5 h-2.5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-                  <div className="w-2.5 h-2.5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                  <div
+                    className="w-2.5 h-2.5 bg-indigo-400 rounded-full animate-bounce"
+                    style={{ animationDelay: "0.1s" }}
+                  ></div>
+                  <div
+                    className="w-2.5 h-2.5 bg-indigo-400 rounded-full animate-bounce"
+                    style={{ animationDelay: "0.2s" }}
+                  ></div>
                 </div>
-                <span className="text-indigo-600 text-xs font-medium ml-2">AI is thinking...</span>
+                <span className="text-indigo-600 text-xs font-medium ml-2">
+                  AI is thinking...
+                </span>
               </div>
             ) : (
-              <p className="whitespace-pre-wrap break-words font-medium">{message.content}</p>
+              <p className="whitespace-pre-wrap break-words font-medium">
+                {message.content}
+              </p>
             )}
           </div>
         </div>
-        
+
         <div className="flex items-center mt-2 px-2">
-          <span className={cn(
-            "text-xs font-medium transition-opacity duration-200",
-            isUser ? "text-indigo-600" : "text-gray-500",
-            "group-hover:opacity-100 opacity-70"
-          )}>
-            {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          <span
+            className={cn(
+              "text-xs font-medium transition-opacity duration-200",
+              isUser ? "text-indigo-600" : "text-gray-500",
+              "group-hover:opacity-100 opacity-70"
+            )}
+          >
+            {new Date(message.timestamp).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </span>
           {isAgent && !isLoading && (
             <div className="ml-2 flex items-center space-x-1 opacity-70 group-hover:opacity-100 transition-opacity duration-200">

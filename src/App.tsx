@@ -12,7 +12,7 @@ import {
 import Landing from "./pages/Landing";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Index from "./pages/Index";
+// import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
@@ -45,7 +45,7 @@ const App = () => (
           {/* Protected routes */}
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/search" element={<Index />} />
+            {/* <Route path="/search" element={<Index />} /> */}
             <Route path="/chat" element={<Chat />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

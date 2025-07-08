@@ -11,7 +11,7 @@ interface Message {
   id: string;
   type: "user" | "agent" | "candidate";
   content: string;
-  timestamp: Date;
+  timestamp: string;
   candidates?: Candidate[];
 }
 
@@ -28,7 +28,7 @@ const initialState: ChatState = {
       type: "agent",
       content:
         "Hello! I'm your AI-powered talent scout assistant. I can help you find the perfect candidates for any role. What position are you looking to fill today?",
-      timestamp: new Date(Date.now() - 60000),
+      timestamp: new Date(Date.now() - 60000).toISOString(),
     },
   ],
   isLoading: false,
@@ -58,7 +58,7 @@ const chatSlice = createSlice({
           type: "agent",
           content:
             "Hello! I'm your AI-powered talent scout assistant. I can help you find the perfect candidates for any role. What position are you looking to fill today?",
-          timestamp: new Date(),
+          timestamp: new Date().toISOString(),
         },
       ];
       state.error = null;
@@ -69,3 +69,5 @@ const chatSlice = createSlice({
 export const { addMessage, addMessages, setLoading, setError, clearChat } =
   chatSlice.actions;
 export default chatSlice.reducer;
+
+export type { Message, Candidate };

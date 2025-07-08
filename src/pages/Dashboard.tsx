@@ -32,21 +32,24 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import { logout } from "@/store/authSlice";
+import { useEffect, useState } from "react";
+import api from "@/lib/axios";
+
+interface RecentSearch {
+  id: string;
+  resourceId: string;
+  title: string;
+  metadata: any;
+  createdAt: string;
+  updatedAt: string;
+}
 
 const Dashboard = () => {
-  const recentSearches = [
-    {
-      query: "React developer with 5+ years",
-      results: 24,
-      time: "2 hours ago",
-    },
-    {
-      query: "Jazz guitarist for collaboration",
-      results: 18,
-      time: "1 day ago",
-    },
-    { query: "UX designer portfolio review", results: 31, time: "3 days ago" },
-  ];
+  const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
+  const [loadingRecent, setLoadingRecent] = useState(true);
+  const token =
+    useSelector((state: RootState) => state.auth.token) ||
+    localStorage.getItem("token");
 
   const savedCandidates = [
     {
@@ -113,6 +116,23 @@ const Dashboard = () => {
   const user =
     useSelector((state: RootState) => state.auth.user) ||
     JSON.parse(localStorage.getItem("user") || "null");
+
+  useEffect(() => {
+    const fetchRecentSearches = async () => {
+      setLoadingRecent(true);
+      try {
+        const res = await api.get("/api/candidates/recent-searches", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setRecentSearches(res.data.recentSearches || []);
+      } catch (err) {
+        setRecentSearches([]);
+      } finally {
+        setLoadingRecent(false);
+      }
+    };
+    fetchRecentSearches();
+  }, [token]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 relative">
@@ -241,48 +261,49 @@ const Dashboard = () => {
                         Your latest AI-powered talent discoveries
                       </CardDescription>
                     </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-white/30 text-white hover:bg-white/10"
-                    >
-                      <Filter className="h-4 w-4 mr-2" />
-                      Filter
-                    </Button>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {recentSearches.map((search, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group"
-                    >
-                      <div className="flex items-center space-x-4">
-                        <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg group-hover:scale-110 transition-transform">
-                          <Search className="h-4 w-4 text-white" />
-                        </div>
-                        <div>
-                          <p className="text-white font-medium">
-                            {search.query}
-                          </p>
-                          <p className="text-white/60 text-sm">
-                            {search.results} candidates found • {search.time}
-                          </p>
-                        </div>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-white/70 hover:text-white"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </Button>
+                  {loadingRecent ? (
+                    <div className="text-white/70">
+                      Loading recent searches...
                     </div>
-                  ))}
-
+                  ) : recentSearches.length === 0 ? (
+                    <div className="text-white/70">
+                      No recent searches found.
+                    </div>
+                  ) : (
+                    recentSearches.map((search) => (
+                      <div
+                        key={search.id}
+                        className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group"
+                      >
+                        <div className="flex items-center space-x-4">
+                          <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg group-hover:scale-110 transition-transform">
+                            <Search className="h-4 w-4 text-white" />
+                          </div>
+                          <div>
+                            <p className="text-white font-medium">
+                              {search.title}
+                            </p>
+                            <p className="text-white/60 text-sm">
+                              {new Date(search.createdAt).toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-white/70 text-white"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ))
+                  )}
                   <Button
                     variant="outline"
-                    className="w-full border-white/30 text-white hover:bg-white/10 mt-4"
+                    className="w-full border-white/30 text-white bg-white/10 mt-4"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     View All Searches
@@ -309,7 +330,7 @@ const Dashboard = () => {
 
                   <Button
                     variant="outline"
-                    className="w-full border-white/30 text-white hover:bg-white/10"
+                    className="w-full border-white/30 text-white bg-white/10"
                   >
                     <Bookmark className="h-4 w-4 mr-2" />
                     Saved Candidates
@@ -317,7 +338,7 @@ const Dashboard = () => {
 
                   <Button
                     variant="outline"
-                    className="w-full border-white/30 text-white hover:bg-white/10"
+                    className="w-full border-white/30 text-white bg-white/10"
                   >
                     <Mail className="h-4 w-4 mr-2" />
                     Message Center
@@ -342,7 +363,7 @@ const Dashboard = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="border-white/30 text-white hover:bg-white/10"
+                  className="border-white/30 text-white bg-white/10"
                 >
                   View All
                 </Button>
@@ -379,7 +400,7 @@ const Dashboard = () => {
                       {candidate.skills.slice(0, 2).map((skill, index) => (
                         <Badge
                           key={index}
-                          className="bg-white/10 text-white/80 hover:bg-white/20"
+                          className="bg-white/10 text-white/80 bg-white/20"
                         >
                           {skill}
                         </Badge>
@@ -402,7 +423,7 @@ const Dashboard = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-white/30 text-white hover:bg-white/10"
+                        className="border-white/30 text-white bg-white/10"
                       >
                         <ExternalLink className="h-3 w-3" />
                       </Button>

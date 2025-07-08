@@ -13,84 +13,46 @@ import {
 import { Link } from "react-router-dom";
 import MessageBubble from "@/components/MessageBubble";
 import CandidateCardBubble from "@/components/CandidateCardBubble";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/store/store";
+import api from "@/lib/axios";
+import {
+  addMessage,
+  addMessages,
+  setLoading,
+  setError,
+} from "@/store/chatSlice";
+import CandidateCardsBubble from "@/components/CandidateCardsBubble";
+
+interface Candidate {
+  name: string;
+  profileUrl: string;
+  platform: string;
+  summary: string;
+}
 
 interface Message {
   id: string;
   type: "user" | "agent" | "candidate";
   content: string;
   timestamp: Date;
-  candidate?: {
-    id: string;
-    name: string;
-    title: string;
-    location: string;
-    platform: string;
-    profileUrl: string;
-    avatar: string;
-    skills: string[];
-    rating: number;
-    experience: string;
-    type: "work" | "music";
-    contact: {
-      email?: string;
-      phone?: string;
-      whatsapp?: string;
-    };
-  };
+  candidates?: Candidate[];
 }
 
 const Chat = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      type: "agent",
-      content:
-        "Hello! I'm your AI-powered talent scout assistant. I can help you find the perfect candidates for any role. What position are you looking to fill today?",
-      timestamp: new Date(Date.now() - 60000),
-    },
-    {
-      id: "2",
-      type: "user",
-      content:
-        "I'm looking for a senior React developer with experience in TypeScript and modern frameworks.",
-      timestamp: new Date(Date.now() - 30000),
-    },
-    {
-      id: "3",
-      type: "agent",
-      content:
-        "Excellent! I've analyzed thousands of profiles and found some outstanding candidates that match your requirements. Here's a top match:",
-      timestamp: new Date(Date.now() - 15000),
-    },
-    {
-      id: "4",
-      type: "candidate",
-      content: "",
-      timestamp: new Date(Date.now() - 10000),
-      candidate: {
-        id: "1",
-        name: "Sarah Chen",
-        title: "Senior React Developer",
-        location: "San Francisco, CA",
-        platform: "linkedin",
-        profileUrl: "https://linkedin.com/in/sarah-chen",
-        avatar:
-          "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
-        skills: ["React", "TypeScript", "Node.js", "GraphQL"],
-        rating: 5,
-        experience: "5+ years experience",
-        type: "work",
-        contact: {
-          email: "sarah.chen@example.com",
-          phone: "+1 (555) 123-4567",
-        },
-      },
-    },
-  ]);
-
   const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const { messages, isLoading, error } = useSelector(
+    (state: RootState) => state.chat
+  );
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  const user =
+    useSelector((state: RootState) => state.auth.user) ||
+    JSON.parse(localStorage.getItem("user") || "null");
+  const token =
+    useSelector((state: RootState) => state.auth.token) ||
+    localStorage.getItem("token");
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -114,21 +76,67 @@ const Chat = () => {
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    dispatch(addMessage(userMessage));
     setInputValue("");
-    setIsLoading(true);
+    dispatch(setLoading(true));
 
-    setTimeout(() => {
+    try {
+      // Call the candidates API
+      const response = await api.post(
+        "/api/candidates",
+        {
+          query: inputValue.trim(),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.success && response.data.result.candidates) {
+        // Add agent message
+        const agentMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          type: "agent",
+          content: `I found ${response.data.result.candidates.length} candidates that match your search. Here they are:`,
+          timestamp: new Date(),
+        };
+
+        // Add candidate message
+        const candidateMessage: Message = {
+          id: (Date.now() + 2).toString(),
+          type: "candidate",
+          content: "",
+          timestamp: new Date(),
+          candidates: response.data.result.candidates,
+        };
+
+        dispatch(addMessages([agentMessage, candidateMessage]));
+      } else {
+        // Handle no results
+        const agentMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          type: "agent",
+          content:
+            "I couldn't find any candidates matching your criteria. Try adjusting your search terms or being more specific. Please re-enter your query and include job title, platform, and location.",
+          timestamp: new Date(),
+        };
+        dispatch(addMessage(agentMessage));
+      }
+    } catch (error) {
+      console.error("Error calling candidates API:", error);
       const agentMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: "agent",
         content:
-          "I'm analyzing our talent database to find more candidates that match your specific requirements. Let me present some additional options.",
+          "Sorry, I encountered an error while searching for candidates. Please try again.",
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, agentMessage]);
-      setIsLoading(false);
-    }, 1500);
+      dispatch(addMessage(agentMessage));
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -209,8 +217,8 @@ const Chat = () => {
                 className="animate-fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {message.type === "candidate" && message.candidate ? (
-                  <CandidateCardBubble candidate={message.candidate} />
+                {message.type === "candidate" && message.candidates ? (
+                  <CandidateCardsBubble candidates={message.candidates} />
                 ) : (
                   <MessageBubble message={message} />
                 )}

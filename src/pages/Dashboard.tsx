@@ -34,6 +34,7 @@ import { RootState, AppDispatch } from "@/store/store";
 import { logout } from "@/store/authSlice";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
+import { clearChat } from "@/store/chatSlice";
 
 interface RecentSearch {
   id: string;
@@ -43,10 +44,22 @@ interface RecentSearch {
   createdAt: string;
   updatedAt: string;
 }
+interface Candidate {
+  id: number;
+  name: string;
+  profileUrl: string;
+  platform: string;
+  summary: string;
+  userId: number;
+  createdAt: string;
+  updatedAt: string;
+}
 
 const Dashboard = () => {
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [loadingRecent, setLoadingRecent] = useState(true);
+  const [loadingCandidate, setLoadingCandidate] = useState(true);
   const token =
     useSelector((state: RootState) => state.auth.token) ||
     localStorage.getItem("token");
@@ -97,18 +110,6 @@ const Dashboard = () => {
       icon: Users,
       color: "from-purple-500 to-pink-500",
     },
-    {
-      label: "Successful Matches",
-      value: "94",
-      icon: Target,
-      color: "from-green-500 to-emerald-500",
-    },
-    {
-      label: "Success Rate",
-      value: "94%",
-      icon: Trophy,
-      color: "from-orange-500 to-red-500",
-    },
   ];
 
   const dispatch = useDispatch<AppDispatch>();
@@ -131,7 +132,22 @@ const Dashboard = () => {
         setLoadingRecent(false);
       }
     };
+
+    const fetchCandidates = async () => {
+      setLoadingRecent(true);
+      try {
+        const res = await api.get(`/api/candidates/get-all?userId=${user.id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setCandidates(res.data || []);
+      } catch (err) {
+        setCandidates([]);
+      } finally {
+        setLoadingCandidate(false);
+      }
+    };
     fetchRecentSearches();
+    fetchCandidates();
   }, [token]);
 
   return (
@@ -179,7 +195,10 @@ const Dashboard = () => {
 
               <div className="flex items-center space-x-4">
                 <Link to="/chat">
-                  <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                  <Button
+                    onClick={() => dispatch(clearChat())}
+                    className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
                     <MessageSquare className="h-4 w-4 mr-2" />
                     New Search
                   </Button>
@@ -218,7 +237,7 @@ const Dashboard = () => {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
             {stats.map((stat, index) => (
               <Card
                 key={index}
@@ -236,11 +255,9 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold text-white">
-                    {stat.value}
-                  </div>
-                  <div className="flex items-center text-xs text-green-400 mt-1">
-                    <TrendingUp className="h-3 w-3 mr-1" />
-                    +12% from last month
+                    {stat.label == "Total Searches"
+                      ? recentSearches.length
+                      : candidates.length}
                   </div>
                 </CardContent>
               </Card>
@@ -277,6 +294,7 @@ const Dashboard = () => {
                       <div
                         key={search.id}
                         className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group"
+                        onClick={() => navigate(`/chat?threadId=${search.id}`)}
                       >
                         <div className="flex items-center space-x-4">
                           <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg group-hover:scale-110 transition-transform">
@@ -295,19 +313,22 @@ const Dashboard = () => {
                           variant="ghost"
                           size="sm"
                           className="text-white/70 text-white"
+                          onClick={() =>
+                            navigate(`/chat?threadId=${search.id}`)
+                          }
                         >
                           <ExternalLink className="h-4 w-4" />
                         </Button>
                       </div>
                     ))
                   )}
-                  <Button
+                  {/* <Button
                     variant="outline"
                     className="w-full border-white/30 text-white bg-white/10 mt-4"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     View All Searches
-                  </Button>
+                  </Button> */}
                 </CardContent>
               </Card>
             </div>
@@ -328,28 +349,32 @@ const Dashboard = () => {
                     </Button>
                   </Link>
 
-                  <Button
-                    variant="outline"
-                    className="w-full border-white/30 text-white bg-white/10"
-                  >
-                    <Bookmark className="h-4 w-4 mr-2" />
-                    Saved Candidates
-                  </Button>
-
-                  <Button
+                  <a href="#saved-candidates" className="block">
+                    <Button
+                      variant="outline"
+                      className="w-full border-white/30 text-white bg-white/10"
+                    >
+                      <Bookmark className="h-4 w-4 mr-2" />
+                      Saved Candidates
+                    </Button>
+                  </a>
+                  {/* <Button
                     variant="outline"
                     className="w-full border-white/30 text-white bg-white/10"
                   >
                     <Mail className="h-4 w-4 mr-2" />
                     Message Center
-                  </Button>
+                  </Button> */}
                 </CardContent>
               </Card>
             </div>
           </div>
 
           {/* Saved Candidates */}
-          <Card className="bg-white/10 backdrop-blur-xl border border-white/20">
+          <Card
+            id="saved-candidates"
+            className="bg-white/10 backdrop-blur-xl border border-white/20"
+          >
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>

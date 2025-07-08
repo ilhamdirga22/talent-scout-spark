@@ -10,7 +10,7 @@ import {
   Zap,
   MessageSquare,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import MessageBubble from "@/components/MessageBubble";
 import CandidateCardBubble from "@/components/CandidateCardBubble";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,6 +21,7 @@ import {
   addMessages,
   setLoading,
   setError,
+  clearChat,
 } from "@/store/chatSlice";
 import CandidateCardsBubble from "@/components/CandidateCardsBubble";
 import type { Message, Candidate } from "@/store/chatSlice";
@@ -32,6 +33,7 @@ const Chat = () => {
     (state: RootState) => state.chat
   );
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   const user =
     useSelector((state: RootState) => state.auth.user) ||
@@ -51,6 +53,89 @@ const Chat = () => {
       }
     }
   }, [messages, isLoading]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const threadId = params.get("threadId");
+    if (threadId) {
+      dispatch(clearChat());
+      dispatch(setLoading(true));
+      api
+        .get(`/api/candidates/msg-history`, {
+          params: { threadId },
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          if (Array.isArray(res.data.messages)) {
+            // Map API messages to chat state
+            const formatUserQuery = (content: string) => {
+              // Try to extract job title, platform, location from the prompt
+              const jobTitleMatch = content.match(/Job Title: ([^\n]+)/i);
+              const platformMatch = content.match(/Platform: ([^\n]+)/i);
+              const locationMatch = content.match(/Location: ([^\n]+)/i);
+              if (jobTitleMatch && platformMatch && locationMatch) {
+                return `Find ${jobTitleMatch[1]} candidates on ${platformMatch[1]} in ${locationMatch[1]}`;
+              }
+              return content;
+            };
+            const mappedMessages = res.data.messages.map((msg: any) => {
+              if (msg.role === "user") {
+                return {
+                  id: msg.id,
+                  type: "user",
+                  content: formatUserQuery(msg.content),
+                  timestamp: msg.createdAt,
+                };
+              } else if (msg.role === "assistant") {
+                // Try to parse content as JSON array of candidates
+                let candidates = undefined;
+                try {
+                  const parsed = JSON.parse(msg.content);
+                  if (
+                    Array.isArray(parsed) &&
+                    parsed[0]?.name &&
+                    parsed[0]?.profileUrl
+                  ) {
+                    candidates = parsed;
+                  }
+                } catch {}
+                if (candidates) {
+                  return {
+                    id: msg.id,
+                    type: "candidate",
+                    content: `I found ${candidates.length} candidates that match your search. Here they are:`,
+                    timestamp: msg.createdAt,
+                    candidates,
+                  };
+                } else {
+                  return {
+                    id: msg.id,
+                    type: "agent",
+                    content: msg.content,
+                    timestamp: msg.createdAt,
+                  };
+                }
+              }
+              // fallback
+              return {
+                id: msg.id,
+                type: "agent",
+                content: msg.content,
+                timestamp: msg.createdAt,
+              };
+            });
+            dispatch(addMessages(mappedMessages));
+          }
+        })
+        .catch(() => {
+          dispatch(setError("Failed to load message history."));
+        })
+        .finally(() => {
+          dispatch(setLoading(false));
+        });
+    }
+    // eslint-disable-next-line
+  }, [location.search, token]);
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -204,7 +289,10 @@ const Chat = () => {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {message.type === "candidate" && message.candidates ? (
-                  <CandidateCardsBubble candidates={message.candidates} />
+                  <>
+                    <MessageBubble message={message} />
+                    <CandidateCardsBubble candidates={message.candidates} />
+                  </>
                 ) : (
                   <MessageBubble message={message} />
                 )}

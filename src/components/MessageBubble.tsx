@@ -6,7 +6,7 @@ interface Message {
   id: string;
   type: "user" | "agent" | "candidate";
   content: string;
-  timestamp: Date;
+  timestamp: string;
   candidate?: {
     id: string;
     name: string;
@@ -34,7 +34,7 @@ interface MessageBubbleProps {
 
 const MessageBubble = ({ message, isLoading }: MessageBubbleProps) => {
   const isUser = message.type === "user";
-  const isAgent = message.type === "agent";
+  const isAgent = message.type === "agent" || message.type === "candidate";
 
   return (
     <div
